@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S&J Grand Hotel | Housekeeping System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!--  LOGIN VIEW -->
+    <div id="login-view">
+        <div class="login-left">
+            <div class="login-left-content">
+                <h1>S&J Grand <span>HOTEL</span></h1>
+                <p data-i18n="sys_desc">ระบบควบคุมคลังพัสดุแผนกแม่บ้าน</p>
+            </div>
+        </div>
+        
+        <div class="login-right">
+            <!-- ปุ่มเปลี่ยนภาษาย้ายมามุมขวาบนสุดของจอ -->
+            <button class="btn-lang-float" onclick="toggleLang()" id="btn-lang">EN</button>
+
+            <div class="login-card">
+                <div class="login-header">
+                </div>
+                
+                <h2 data-i18n="sign_in">เข้าสู่ระบบ</h2>
+                <p class="sub-title" data-i18n="login_sub">กรอกรหัสพนักงานเพื่อเข้าใช้งานระบบ</p>
+                
+                <form onsubmit="event.preventDefault(); login();">
+                    <div class="form-group">
+                        <label data-i18n="emp_id">รหัสพนักงาน</label>
+                        <input type="text" id="username" placeholder="เช่น ADMIN-01 หรือ HK-01" required autocomplete="off">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label data-i18n="password">รหัสผ่าน</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary" data-i18n="btn_login">เข้าสู่ระบบ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--  APP VIEW -->
+    <div id="app-view">
+        <div id="mobile-overlay" class="mobile-overlay" onclick="toggleMobileMenu()"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <h2>S&J HOTEL</h2>
+                <p>INVENTORY SYSTEM</p>
+            </div>
+            <div class="nav-menu" id="nav-menu"></div>
+            <div class="nav-menu" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top:10px;">
+                <div class="nav-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="menu_logout">ออกจากระบบ</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div style="display: flex; align-items: center;">
+                    <button class="btn-mobile-menu" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 style="color: #1e293b; font-weight: 500; margin: 0;" data-i18n="sys_title">จัดการคลังพัสดุ</h3>
+                </div>
+                
+                <div class="user-profile">
+                    <button class="btn-lang" onclick="toggleLang()" id="btn-lang-app" style="margin-right: 12px;">EN</button>
+                    <div style="text-align: right; margin-right: 12px;" class="hide-mobile">
+                        <div id="user-name-display" style="font-weight: 500; font-size: 14px;">-</div>
+                        <div id="user-role-display" style="font-size: 12px; color: var(--accent-gold);">Role</div>
+                    </div>
+                    <button class="btn-outline btn-profile" onclick="openProfileModal()" title="ตั้งค่าบัญชี">
+                        <i class="fas fa-user-cog"></i>
+                    </button>
+                </div>
+            </header>
+
+            <section class="content-area">
+                <!-- 1. คลังพัสดุ -->
+                <div id="view-inventory" class="view-section active">
+                    <div class="header-action">
+                        <h2><i class="fas fa-boxes"></i> <span data-i18n="title_inv">รายการพัสดุคงคลัง</span></h2>
+                        <button class="btn-outline" id="btn-add-item" style="display:none;" onclick="openAddModal()">+ <span data-i18n="btn_add">เพิ่มพัสดุใหม่</span></button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_id">รหัสพัสดุ</th><th data-i18n="th_item">ชื่อรายการ</th><th data-i18n="th_qty">คงเหลือ</th>
+                                    <th data-i18n="th_unit">หน่วยนับ</th><th data-i18n="th_status">สถานะ</th><th id="inv-action-th" style="display:none;" data-i18n="th_action">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 2. คำขอเบิก -->
+                <div id="view-requests" class="view-section">
+                    <div class="header-action">
+                        <h2><i class="fas fa-clipboard-list"></i> <span data-i18n="title_req">รายการขอเบิกพัสดุ</span></h2>
+                        <div>
+                            <button class="btn-outline" onclick="exportCSV('requests')" style="margin-right: 8px;"><i class="fas fa-download"></i> ดาวน์โหลด CSV</button>
+                            <button class="btn-outline" id="btn-create-req" style="display:none;" onclick="openReqModal()">+ <span data-i18n="btn_req">ทำเรื่องขอเบิก</span></button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_req_id">รหัสใบเบิก</th><th data-i18n="th_req_by">ผู้ขอเบิก</th><th data-i18n="th_item">รายการ</th>
+                                    <th data-i18n="th_qty_req">จำนวน</th><th data-i18n="th_status">สถานะ</th><th data-i18n="th_action">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requests-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. แจ้งชำรุด -->
+                <div id="view-damages" class="view-section">
+                    <div class="header-action">
+                        <h2><i class="fas fa-exclamation-circle"></i> <span data-i18n="title_dmg">รายงานของชำรุด/สูญหาย</span></h2>
+                        <div>
+                            <button class="btn-outline" onclick="exportCSV('damages')" style="margin-right: 8px;"><i class="fas fa-download"></i> ดาวน์โหลด CSV</button>
+                            <button class="btn-outline" id="btn-report-dmg" style="display:none;" onclick="openDmgModal()">+ <span data-i18n="btn_dmg">แจ้งชำรุด</span></button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_date">วันที่</th><th data-i18n="th_req_by">ผู้แจ้ง</th><th data-i18n="th_item">รายการ</th>
+                                    <th data-i18n="th_qty_req">จำนวน</th><th data-i18n="th_reason">สาเหตุ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="damages-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. พนักงาน -->
+                <div id="view-users" class="view-section">
+                    <div class="header-action">
+                        <h2><i class="fas fa-users"></i> <span data-i18n="title_users">รายชื่อพนักงาน</span></h2>
+                        <button class="btn-outline" onclick="openUserModal()">+ <span data-i18n="btn_add_user">เพิ่มพนักงาน</span></button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_id">รหัสพนักงาน</th><th data-i18n="th_name">ชื่อ-นามสกุล</th>
+                                    <th data-i18n="th_role">ตำแหน่ง</th><th data-i18n="th_action">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

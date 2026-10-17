@@ -1,0 +1,112 @@
+:root {
+    --primary-bg: #f8fafc; 
+    --sidebar-bg: #1e293b;
+    --accent-gold: #d97706;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --danger: #ef4444;
+    --success: #10b981;
+    --brand-blue: #0f172a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', 'Inter', sans-serif; }
+body { background-color: var(--primary-bg); color: #334155; height: 100vh; display: flex; overflow: hidden; }
+
+/* LOGIN UI */
+#login-view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; z-index: 1000; background: #fff; }
+.login-left { flex: 6; position: relative; background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80') center/cover; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+.login-left-content h1 { font-size: 3.2rem; font-weight: 500; letter-spacing: -1px; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+.login-left-content h1 span { color: #fff; background: var(--danger); padding: 2px 10px; border-radius: 4px; font-size: 2.6rem; margin-left: 8px;}
+.login-left-content p { font-size: 1.1rem; opacity: 0.85; font-weight: 300; }
+
+.login-right { flex: 4; position: relative; background: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; min-width: 420px; }
+.login-card { width: 100%; max-width: 380px; background: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; }
+
+/*  ปรับโลโก้ตรงกลาง */
+.login-header { display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
+.logo-text { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 700; color: #0f172a; letter-spacing: -1px; }
+
+.login-card h2 { font-size: 1.4rem; font-weight: 600; color: #0f172a; margin-bottom: 4px; text-align: left; }
+.login-card p.sub-title { color: #64748b; font-size: 0.875rem; margin-bottom: 24px; text-align: left; }
+.form-group { margin-bottom: 18px; text-align: left; }
+.form-group label { display: block; font-size: 0.85rem; color: #475569; margin-bottom: 6px; font-weight: 500; }
+.form-group input { width: 100%; padding: 12px 14px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; outline: none; font-size: 14px; transition: 0.2s; }
+.form-group input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+.btn-primary { width: 100%; padding: 12px; background: var(--brand-blue); color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.2s; }
+.btn-primary:hover { background: #1e293b; }
+
+/*  ปรับปุ่มเปลี่ยนภาษามุมขวาบนของหน้าจอ */
+.btn-lang-float { position: absolute; top: 30px; right: 30px; background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; transition: 0.2s; z-index: 10; }
+.btn-lang-float:hover { background: #e2e8f0; color: #0f172a; }
+
+/*  DASHBOARD LAYOUT */
+#app-view { display: none; width: 100%; height: 100%; position: relative; }
+.sidebar { width: 250px; background: var(--sidebar-bg); color: var(--text-main); display: flex; flex-direction: column; transition: 0.3s ease; }
+.brand { padding: 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.brand h2 { color: #fbbf24; font-weight: 600; font-size: 1.2rem; letter-spacing: 1px; font-family: 'Inter', sans-serif; }
+.brand p { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; margin-top: 2px; }
+.nav-menu { padding: 16px 0; flex-grow: 1; overflow-y: auto; }
+.nav-item { padding: 12px 24px; cursor: pointer; display: flex; align-items: center; gap: 12px; color: var(--text-muted); transition: 0.2s; font-size: 14px; }
+.nav-item:hover, .nav-item.active { color: #fbbf24; background: rgba(251, 191, 36, 0.08); border-left: 3px solid #fbbf24; }
+
+.main-content { flex-grow: 1; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+.topbar { background: white; height: 64px; min-height: 64px; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; border-bottom: 1px solid #e2e8f0; }
+.user-profile { display: flex; align-items: center; }
+.content-area { padding: 28px; width: 100%; }
+.header-action { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+.header-action h2 { font-size: 1.25rem; color: #0f172a; font-weight: 500;}
+
+/* BUTTONS & TABLES */
+.btn-lang { background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; transition: 0.2s; }
+.btn-lang:hover { background: #e2e8f0; color: #0f172a; }
+.btn-outline { border: 1px solid var(--brand-blue); color: var(--brand-blue); background: transparent; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: 0.2s; white-space: nowrap; }
+.btn-outline:hover { background: var(--brand-blue); color: white; }
+.btn-profile { padding: 8px 12px; background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569; }
+.btn-action { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; color: white; margin-right: 4px; font-weight: 400; white-space: nowrap; margin-bottom: 4px; }
+.bg-success { background: var(--success); } .bg-danger { background: var(--danger); }
+
+/* ตารางปรับยืดหยุ่นในมือถือ */
+.table-container { background: white; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); overflow-x: auto; width: 100%; }
+table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+th { padding: 12px 10px; border-bottom: 2px solid #f1f5f9; color: #64748b; font-size: 12px; font-weight: 500; white-space: nowrap; }
+td { padding: 14px 10px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #334155; }
+.badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+
+.view-section { display: none; }
+.view-section.active { display: block; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Popup Styling */
+.swal2-container { z-index: 99999 !important; }
+.swal2-popup { border-radius: 12px !important; padding: 2em 1.5em !important; }
+.custom-form-group { text-align: left; margin-bottom: 16px; }
+.custom-form-group label { display: block; font-size: 13px; color: #475569; margin-bottom: 6px; font-weight: 500; }
+.custom-form-group input, .custom-form-group select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-family: 'Kanit', sans-serif; color: #1e293b; box-sizing: border-box; }
+.custom-form-group input:focus, .custom-form-group select:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+.custom-form-group input:disabled { background: #f1f5f9; color: #94a3b8; cursor: not-allowed; }
+
+/* ==========================================
+    MOBILE RESPONSIVE
+========================================== */
+.btn-mobile-menu { display: none; background: transparent; border: none; font-size: 1.4rem; color: #0f172a; cursor: pointer; margin-right: 15px; }
+.mobile-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1040; }
+
+@media (max-width: 768px) {
+    #login-view { flex-direction: column; overflow-y: auto; }
+    .login-left { flex: none; height: 35vh; min-height: 250px; }
+    .login-left-content h1 { font-size: 2.2rem; }
+    .login-left-content h1 span { font-size: 1.8rem; }
+    .login-right { flex: none; height: auto; min-width: 100%; padding: 20px; justify-content: flex-start; }
+    .login-card { padding: 30px 20px; }
+    
+    .btn-lang-float { top: 15px; right: 15px; } /* ปรับปุ่มเปลี่ยนภาษาในมือถือ */
+
+    .btn-mobile-menu { display: block; }
+    .hide-mobile { display: none !important; }
+    .topbar { padding: 0 15px; }
+    .content-area { padding: 15px; }
+    
+    .sidebar { position: fixed; left: -280px; top: 0; height: 100%; width: 260px; z-index: 1050; }
+    .sidebar.active { left: 0; }
+    .mobile-overlay.active { display: block; }
+}
