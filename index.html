@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <!--  LOGIN VIEW -->
+    <!-- LOGIN VIEW -->
     <div id="login-view">
         <div class="login-left">
             <div class="login-left-content">
@@ -21,20 +21,18 @@
         </div>
         
         <div class="login-right">
-            <!-- ปุ่มเปลี่ยนภาษาย้ายมามุมขวาบนสุดของจอ -->
             <button class="btn-lang-float" onclick="toggleLang()" id="btn-lang">EN</button>
 
             <div class="login-card">
-                <div class="login-header">
-                </div>
-                
+                <div class="login-header"></div>
                 <h2 data-i18n="sign_in">เข้าสู่ระบบ</h2>
                 <p class="sub-title" data-i18n="login_sub">กรอกรหัสพนักงานเพื่อเข้าใช้งานระบบ</p>
                 
                 <form onsubmit="event.preventDefault(); login();">
                     <div class="form-group">
                         <label data-i18n="emp_id">รหัสพนักงาน</label>
-                        <input type="text" id="username" placeholder="เช่น ADMIN-01 หรือ HK-01" required autocomplete="off">
+                        <!-- แก้ไขข้อ 1: เอา placeholder "เช่น ADMIN-01" ออก -->
+                        <input type="text" id="username" placeholder="ระบุรหัสพนักงาน" required autocomplete="off">
                     </div>
                     <div class="form-group" style="margin-bottom: 30px;">
                         <label data-i18n="password">รหัสผ่าน</label>
@@ -46,7 +44,7 @@
         </div>
     </div>
 
-    <!--  APP VIEW -->
+    <!-- APP VIEW -->
     <div id="app-view">
         <div id="mobile-overlay" class="mobile-overlay" onclick="toggleMobileMenu()"></div>
 
@@ -117,6 +115,8 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <!-- เพิ่มคอลัมน์วันที่เบิก -->
+                                    <th data-i18n="th_date">วันที่เบิก</th>
                                     <th data-i18n="th_req_id">รหัสใบเบิก</th><th data-i18n="th_req_by">ผู้ขอเบิก</th><th data-i18n="th_item">รายการ</th>
                                     <th data-i18n="th_qty_req">จำนวน</th><th data-i18n="th_status">สถานะ</th><th data-i18n="th_action">จัดการ</th>
                                 </tr>
